@@ -1,2 +1,2 @@
 # gcv6_public
-gcv6 source code for portfolio
+Part of my app source code for portfolio

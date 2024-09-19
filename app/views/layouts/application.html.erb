@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <title><%= content_for?(:title) ? yield(:title) : "GuitarCollectionVirtual" %> | GCV - Archives Guitars Project</title>
+
+    <!--== Favicon ==-->
+    <%= favicon_pack_tag 'favicon.ico' %>
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,700%7CRoboto:400,500%7CRoboto:400,500&display=swap" rel="stylesheet">
+
+    <%= stylesheet_pack_tag "application", "member_application", media: "all", "data-turbolinks-track": "reload" %>
+    <%= javascript_pack_tag "application", "member_application", "data-turbolinks-track": "reload" %>
+    <%= yield :head %>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CK6JWEHRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8CK6JWEHRL');
+    </script>
+  </head>
+
+<body class="layout-fluid" style="overflow: hidden;">
+  <!-- Header Layout -->
+  <div class="mdk-header-layout js-mdk-header-layout">
+    <div id="modal-holder"></div>
+    <!-- Header -->
+      <div
+        id="header"
+        data-fixed
+        class="mdk-header js-mdk-header mb-0">
+        <div class="mdk-header__content">
+          <%= render "components/navbar" %>
+        </div>
+      </div>
+    <!-- // END Header -->
+
+    <!-- Header Layout Content -->
+    <div class="mdk-header-layout__content">
+
+      <div
+        data-push
+        data-responsive-width="992px"
+        class="mdk-drawer-layout js-mdk-drawer-layout">
+        <div class="mdk-drawer-layout__content page pt-0">
+          <%= render "partial/flash" %>
+          <%= yield %>
+          <%= render "components/nav-footer" %>
+        </div>
+        <%= render "components/sidebar" %>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+.mtn-30 {
+    margin-top: -30px
+}
+
+.mtn-40 {
+    margin-top: -40px
+}
+
+.mt-5 {
+    margin-top: 5px
+}
+
+.mt-30 {
+    margin-top: 30px
+}
+
+.mb-5 {
+    margin-bottom: 5px
+}
+
+.mb-20 {
+    margin-bottom: 20px
+}
+
+.mb-40 {
+    margin-bottom: 40px
+}
+
+@media only screen and (max-width:767.98px) {
+    .mb-sm-20 {
+        margin-bottom: 20px
+    }
+}
+
+@media only screen and (max-width:767.98px) {
+    .mb-sm-30 {
+        margin-bottom: 30px
+    }
+}

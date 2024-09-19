@@ -1,0 +1,119 @@
+<% content_for :title do %>About GuitarCollectionVirtual<% end %>
+<!--== Start Page Header Area ==-->
+<div class="page-header-wrap bg-img" data-bg=<%= asset_pack_path("media/images/page-header-bg.jpg") %>>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="page-header-content">
+          <div class="page-header-content-inner">
+            <h1>About GuitarColloectionVirtual</h1>
+            <ul class="breadcrumb">
+              <li><a href="/">Home</a></li>
+              <li class="current"><a href="/about">About</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Page Header Area ==-->
+
+<% if I18n.locale == :ja %>
+  <div class="page-content-wrapper sm-top">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="about-content">
+          <h1 class="h3 mb-sm-20">Guitar Archive Project In The World</h1>
+          <h2 class="h5">Welcome to Guitar Collections Virtual!</h3>
+          <p class="meta"><small>
+            ギター・コレクション・バーチャルは、マイ・ギター投稿サイトです
+          </small></p>
+          <p>
+          ギター・コレクション・バーチャルは、メンバーどうしで仮想的にギターをコレクションする、マイ・ギター投稿サイトです。<br />
+          ギタリストのみなさまは、ご自慢の愛するギターを紹介してください。
+          </p>
+
+          <h2 class="h4"><%= link_to "メンバー登録しよう", new_member_registration_path %></h2>
+          <p class="meta"><small>
+            アカウントの取得
+          </small></p>
+          <p>
+          まずはメンバー登録して、アカウントの取得が必要です。<br />
+          フォームに必要事項を入力、登録完了！<br />
+          ギタリストとしてのあなたのプロフィールを、専用ページで紹介してください。
+          </p>
+
+          <h2 class="h4"><%= link_to "ギターを投稿しよう", manages_my_entries_path %></h2>
+          <p class="meta"><small>
+            あなたの愛するギターを紹介してください
+          </small></p>
+          <p>
+          画像付きであなたの所有するギターを投稿してください。詳しいスペックなども書き込めます。<br />
+          ハイエンドモデル、改造したギター、珍品？など、すでにたくさんの素敵なギターが登録されています。<br />
+          その他、エフェクターやアンプの投稿もできます。
+          </p>
+
+          <h2 class="h4"><%= link_to "ギターをコレクションしよう", entries_path %></h2>
+          <p class="meta"><small>
+            お気に入りのギターをコレクション
+          </small></p>
+          <p>
+          他のメンバーが投稿したギターで、お気に入りがみつかれば、コレクションしましょう。<br />
+          ギターのコレクターとしてリンクされ、あなたのコレクションページにギターが登録されます。<br />
+          コメントもできますので、賞賛、質問などギターのオーナーにあなたの声を伝えて、コミュニケーションしてください。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% else %>
+  <div class="page-content-wrapper sm-top">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="about-content">
+          <h1 class="h3 mb-sm-20">Guitar Archive Project In The World</h1>
+          <h2 class="h5">Welcome to Guitar Collections Virtual!</h3>
+          <p class="meta"><small>
+            Guitar Collection Virtual is a site to post your own guitar!
+          </small></p>
+          <p>
+          Guitar Collection Virtual is a virtual guitar collection site where members can post their own guitars.</br>
+          If you are a guitarist, please introduce your beloved guitar.	    
+          </p>
+
+          <h2 class="h4"><%= link_to "Get an Account", new_member_registration_path %></h2>
+          <p class="meta"><small>
+            sign up
+          </small></p>
+          <p>
+          First of all, you need to register as a member and get an account.
+          </br>
+          Introduce your profile as a guitarist on the dedicated page.
+          </p>
+
+          <h2 class="h4"><%= link_to "Submit your Guitar", manages_my_entries_path %></h2>
+          <p class="meta"><small>
+            Show us the guitars you love!
+          </small></p>
+          <p>
+          Please post your guitar with pictures. You can also include detailed specs.
+          High-end models, modified guitars, rare guitars. There are already a lot of great guitars registered here.<br/>
+          You can also post your pedals and amps.
+          </p>
+
+          <h2 class="h4"><%= link_to "Collect Guitar", entries_path %></h2>
+          <p class="meta"><small>
+            Collect your favorite guitars!
+          </small></p>
+          <p>
+          If you find a guitar that other members have posted that you like, you can collect it.<br/>
+          You will be linked as a guitar collector and the guitar will be added to your collection page.<br/>
+          You can also make comments, praise, ask questions, and communicate with the guitar owner.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

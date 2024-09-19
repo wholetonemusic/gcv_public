@@ -1,0 +1,97 @@
+<% content_for :title do %>Manage Your Collections<% end %>
+<div class="container-fluid page__container">
+  <ol class="breadcrumb mt-5">
+    <li class="breadcrumb-item">
+      <%= link_to "Home" , member_root_path %>
+    </li>
+    <li class="breadcrumb-item active"><%= link_to "Manage Collections", manages_entry_collections_path %></li>
+  </ol>
+
+  <div class="d-flex flex-column flex-sm-row flex-wrap mb-headings align-items-start align-items-sm-center">
+    <div class="flex mb-2 mb-sm-0">
+      <h1 class="h2">Manage Your Collections</h1>
+    </div>
+  </div>
+
+  <div class="card card-body border-left-3 border-left-primary navbar-shadow mb-4">
+    <form action="/manages/entry_collections">
+      <div class="d-flex flex-wrap2 align-items-center mb-headings">
+        <div class="flex search-form ml-3 search-form--light">
+          <input value="<%= @q if @q %>" type="text" class="form-control" name="search[q]" id="search_q" placeholder="Search">
+          <button class="btn" type="submit" role="button" data-disable-with="Search"><i class="material-icons">search</i></button>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column flex-sm-row align-items-sm-center" style="white-space: nowrap;">
+        <small class="flex text-muted text-uppercase mr-3 mb-2 mb-sm-0"><%= (page_entries_info @collections).sub(/#.*gt;/, "").html_safe %></small>
+      </div>
+    </form>
+  </div>
+
+  <% unless @collections.present? %>
+  <div class="alert alert-light alert-dismissible border-1 border-left-3 border-left-warning" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="text-black-70">No collectons to display.</div>
+  </div>
+  <% else %>
+  <div class="row">
+    <% @collections.each do |v| %>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="d-flex flex-column flex-sm-row">
+              <%= link_to entry_path(v.votable.id), class: "avatar avatar-lg avatar-4by3 mb-3 mr-sm-3" do %>
+                <% if v.votable.entry_images.present? %>
+                <%= image_tag v.votable.entry_images.first.variant(resize_to_limit: [85, nil]), class: "avatar-img rounded" %>
+                <% else %>
+                "THIS ITEMS DO NOT HAVE A IMAGE"
+                <% end %>
+              <% end %>
+              <div class="flex" style="min-width: 200px;">
+                <h4 class="card-title mb-1">
+                  <%= link_to v.votable.heading, entry_path(v.votable.id) %>
+                </h4>
+                <p class="text-black-70"><%= v.votable.body.truncate(30) if v.votable.body %></p>
+                <div class="d-flex align-items-end">
+                  <div class="d-flex flex flex-column mr-3">
+                    <div class="d-flex align-items-center py-1 border-bottom">
+                      <small class="text-black-70 mr-2"><%= v.votable.view_count %> view</small>
+                      <small class="text-black-70"><%= v.votable.collector_count %> collector</small>
+                    </div>
+                    <div class="d-flex align-items-center py-1">
+                      <small class="text-muted mr-2">OWNER : </small>
+                      <small class="text-black-70"><%= link_to v.votable.owner.login, profile_path(v.votable.owner.id) %></small>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <p class="btn btn-sm btn-warning">Your Collection</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card__options dropdown right-0 pr-2">
+            <a href="#" class="dropdown-toggle text-muted" data-caret="false" data-toggle="dropdown">
+              <i class="material-icons">more_vert</i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <small class="dropdown-item text-muted pb-0">collected at</small>
+              <p class="dropdown-item"><%= v.created_at.strftime("%b %e, %Y") %></p>
+              <div class="dropdown-divider"></div>
+              <%= link_to "Delete from Collection", entry_uncollection_url({entry_id: v.votable.id, manage: 'member'}), data: { confirm: "Are you sure you want to delete this collection?" }, method: :delete, class: "dropdown-item text-danger" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+  </div>
+
+  <div class="justify-content-center mb-5">
+    <%= paginate @collections %>
+  </div>
+  <% end %><%# @collections.present? %>
+</div>

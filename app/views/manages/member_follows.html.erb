@@ -1,0 +1,59 @@
+<% content_for :title do %>Manage Following<% end %>
+<div class="container-fluid page__container">
+  <ol class="breadcrumb mt-5">
+    <li class="breadcrumb-item">
+      <%= link_to 'Home', member_root_path %> 
+    </li>
+    <li class="breadcrumb-item active">
+      <%= link_to 'Manage Following', manages_member_follows_path %>
+    </li>
+  </ol>
+  <h1 class="h2">Manage Following</h1>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">
+	<span class="text-primary"><%= current_member.follow_count %></span> following
+      </h5>
+    </div>
+    <div class="card-body">
+      <h4>Following</h4>
+      <div class="mb-4">
+	<% @follows.each do |v| %>
+        <div class="d-flex p-1 mb-2">
+	  <%= link_to profile_path(v.votable.profile.id), class: 'avatar avatar-sm mr-3' do %>
+	    <% if v.votable.profile.avatar_image.present? %>
+            <%= image_tag(v.votable.profile.avatar_image, class: "avatar-img") %>
+            <% else %>    
+            <%= gravatar_image_tag(v.votable, class: "avatar-img") %>
+            <% end %>
+          <% end %>
+          <div class="flex mr-2">
+	    <%= link_to profile_path(v.votable.profile.id), class: 'text-body' do %>
+	      <strong><%= v.votable.profile.login %></strong>
+	    <% end %>
+	    <p class="text-black-70 m-0"><small><%= v.votable.profile.about_me.truncate(50) if  v.votable.profile.about_me %></small></p>
+          </div>
+          <div class="text-center">
+            <div class="dropdown">
+              <a href="#" class="dropdown-toggle text-muted" data-caret="false" data-toggle="dropdown">
+                <i class="material-icons">more_vert</i>
+	      </a>
+	      <div class="dropdown-menu dropdown-menu-right">
+		<div class="dropdown-item">
+                <%= button_to 'unfollow', unfollow_path(follow_id: v.votable.id, manage: 'member'),
+	        data: { confirm: "Are you sure unfollow this member?" },
+	        class: 'btn btn-secondary',
+                method: :patch %>
+	        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="justify-content-center mb-5">
+    <%= paginate @follows %>
+  </div>
+</div>

@@ -1,0 +1,132 @@
+<!-- sidebar-light sidebar-transparent-sm-up -->
+<div class="mdk-drawer js-mdk-drawer" id="default-drawer">
+  <div class="mdk-drawer__content sidebar-dark bg-dark">
+    <div
+      class="sidebar sidebar-left sidebar-dark bg-dark o-hidden"
+      data-perfect-scrollbar
+    >
+      <div class="sidebar-p-y">
+        <div class="sidebar-heading">PRIVATE MENUE</div>
+        <ul class="sidebar-menu sm-active-button-bg">
+          <li class="sidebar-menu-item">
+            <a class="sidebar-menu-button" href="/home">
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >dashboard</i
+              >
+              Home
+            </a>
+          </li>
+         <li class="sidebar-menu-item">
+            <a class="sidebar-menu-button" href="/manages/my_entries">
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >library_books</i
+              >
+              Entries
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+            <a class="sidebar-menu-button" href="/manages/entry_collections">
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >library_add_check</i
+              >
+              Collections
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+            <a class="sidebar-menu-button" href="/manages/entry_favorites">
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >bookmarks</i
+              >
+              Favorites
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+	    <a class="sidebar-menu-button" href="<%= url_for profile_path(current_member.profile.id)%>">
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >account_box</i
+              >
+              Profile
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+            <a class="sidebar-menu-button" href="/manages/member_follows">
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >emoji_emotions</i
+              >
+              Following
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+            <a class="sidebar-menu-button" href="/manages/member_followers">
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >emoji_emotions</i
+              >
+              Followers
+            </a>
+          </li>
+        </ul>
+        <!-- Account menu -->
+        <div class="sidebar-heading">Account</div>
+        <ul class="sidebar-menu">
+          <li class="sidebar-menu-item open">
+            <a
+              class="sidebar-menu-button sidebar-js-collapse"
+              data-toggle="collapse"
+              href="#account_menu"
+            >
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >person_outline</i
+              >
+              Account
+              <span class="ml-auto sidebar-menu-toggle-icon"></span>
+            </a>
+            <ul
+              class="sidebar-submenu sm-indent collapse show"
+              id="account_menu"
+            >
+              <li class="sidebar-menu-item active">
+                <%= link_to edit_member_registration_path, class: "sidebar-menu-button" do %>
+                  <span class="sidebar-menu-text">Edit Account</span>
+                <% end %>
+              </li>
+              <li class="sidebar-menu-item active">
+                <%= link_to edit_profile_path(current_member.profile.id), class: "sidebar-menu-button" do %>
+                  <span class="sidebar-menu-text">Edit Profile</span>
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="sidebar-heading"></div>
+        <ul class="sidebar-menu sm-active-button-bg">
+          <li class="sidebar-menu-item active">
+            <a class="sidebar-menu-button" href="/help">
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >live_help</i
+              >
+              Get Help
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+	    <%= link_to destroy_member_session_path, class: "sidebar-menu-button", data: { method: 'delete' } do %>
+              <i
+                class="sidebar-menu-icon sidebar-menu-icon--left material-icons"
+                >lock_open</i
+              >
+              Logout
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

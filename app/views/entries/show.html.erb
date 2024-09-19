@@ -1,0 +1,276 @@
+<% content_for :title do %><%= entry_title(@entry) %><% end %>
+<% content_for :twitter_cards do %>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:title" content="<%= twitter_cards(@entry)[:title] %>">
+  <meta property="og:description" content="<%= twitter_cards(@entry)[:description] %>">
+  <meta property="og:image" content="<%= twitter_cards(@entry)[:image] %>">
+<% end %>
+<% if @entry.translate_ja_entry.present? && @entry.translate_ja_entry.translated == true %>
+  <% content_for :alternate do %>
+    <link rel="alternate" hreflang="en" href="https://guitar-cv.com/en/entries/<%= @entry.id %>" />
+    <link rel="alternate" hreflang="ja" href="https://guitar-cv.com/ja/entries/<%= @entry.id %>" />
+    <link rel="alternate" hreflang="x-default" href="https://guitar-cv.com/entries/<%= @entry.id %>" />
+  <% end %>
+<% else %>
+  <% content_for :alternate do %>
+    <link rel="alternate" hreflang="x-default" href="https://guitar-cv.com/entries/<%= @entry.id %>" />
+  <% end %>
+<% end %>
+<!--== Start Page Header Area ==-->
+<div class="page-header-wrap bg-img" data-bg=<%= asset_pack_path("media/images/page-header-bg.jpg") %>>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="page-header-content">
+          <div class="page-header-content-inner">
+            <h1 class="mt-1">Entry Gear</h1>
+
+            <ul class="breadcrumb">
+              <li><%= link_to "Home", root_path %></li>
+              <li><%= link_to "Entries", entries_path %></li>
+              <li class="current"><%= link_to @entry.category.titleize, categories_path(@entry.category.downcase) %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Page Header Area ==-->
+
+<!--== Start Page Content Wrapper ==-->
+<div class="page-content-wrapper sp-y">
+  <div class="product-details-page-content">
+    <div class="container container-wide">
+      <div class="row">
+        <!-- Search -->
+        <div class="col-12">
+          <div class="row">
+            <!-- Start Product Thumbnail Area -->
+            <div class="col-md-5">
+              <!-- Search -->
+              <form action="/entries" class="mb-5">
+                <div class="d-flex align-items-center">
+                  <!-- Input Search Word -->
+                  <div class="flex search-form ml-3">
+                    <input value="<%= @q if @q %>" class="string required form-control" required="required" aria-required="true" type="text" name="search[q]" id="search_q" placeholder="Search">
+                    <% if controller.controller_name == "categories" %>
+                      <input type="hidden" id="category" name="category" value="<%= @category %>">
+                    <% end %>
+                    <button type="submit" name="commit" value="Search" class="btn" role="button" data-disable-with="Search">
+                      <i class="material-icons">search</i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <!-- // END Search -->
+              <div class="product-thumb-area">
+                <div class="product-details-thumbnail">
+                  <div id="spinner" style="">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <script>
+                    $(window).on('load', function() {
+                      $('#spinner').hide();
+                    })
+                  </script>
+                  <div class="product-thumbnail-slider" id="thumb-gallery">
+                    <% if @entry.entry_images.any? %>
+                      <% entry_images_slider_tag(@entry).each do |image| %>
+                        <%= image %>
+                      <% end %>
+                    <% else %>
+                      <p style="height: 200px">NO IMAGE</p>
+                    <% end %>
+                  </div>
+
+                  <a href="#thumb-gallery" class="btn-large-view btn-gallery-popup"><i
+                                           class="fa fa-search-plus"></i></a>
+                </div>
+
+                <div class="product-details-thumbnail-nav">
+                  <% entry_images_slider_nav_tag(@entry).each do |image| %>
+                    <%= image %>
+                  <% end %>
+                </div>
+              </div>
+              <!-- Start AdSense Area -->
+              <div class="mt-5 mb-5">
+              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9833912683433003"
+                            crossorigin="anonymous"></script>
+              <ins class="adsbygoogle"
+                   style="display:block; text-align:center;"
+                   data-ad-layout="in-article"
+                   data-ad-format="fluid"
+                   data-ad-client="ca-pub-9833912683433003"
+                   data-ad-slot="2394873058"></ins>
+              <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+              </div>
+              <!-- End AdSense Area -->
+            </div>
+            <!-- End Product Thumbnail Area -->
+
+            <!-- Start Product Info Area -->
+            <div class="col-md-7">
+              <div class="product-details-info-content-wrap">
+                <div class="prod-details-info-content">
+                  <h2><%= @entry.heading %></h2>
+                  <h5 class="mt-5">owner:
+                  <%= link_to @entry.profile do %>
+                    <%= @entry.profile.login %>
+                    <% if @entry.profile.avatar_image.present? %>
+                      <%= image_tag(@entry.profile.avatar_image.variant(resize_to_limit: [150, 150]), class: "rounded-circle", style: "width: 40px; height: 40px; object-fit: cover;") %>
+                    <% else %>
+                      <%= gravatar_image_tag(@entry.member, class: "rounded-circle", width: "40") %>
+                    <% end %>
+                  <% end %>
+                  </h5>
+                  <p><%= simple_format(@entry.body) %></p>
+                  <div class="btn btn-outline-dark btn-sm d-flex justify-content-center text-justify">
+                    <small>Posted on <%= @entry.created_at.strftime("%b %e, %Y") %></small>
+                  </div>
+                  <div class="product-config">
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <% entry_specs_tag(@entry).each do |spec| %>
+                          <%= spec %>
+                        <% end %>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Product Info Area -->
+
+              <!-- Start Product Item -->
+              <div class="product-item p-3 text-center">
+                <%# Start Turbo %>
+                <%= turbo_stream_from "votes" %>
+                <%= turbo_frame_tag "votes", data: { turbo: true } do %>
+                  <div class="btn btn-outline-dark btn-sm d-flex justify-content-center text-justify">
+                    <small><%= @entry.view_count %> view : <%= @entry.collector_count %> collectors</small>
+                  </div>
+                  <div class="ratting mt-3">
+                    <% ratting_stars_tag(@entry).each do |star| %>
+                      <%= star %>
+                    <% end %>
+                  </div>
+                  <div class="product-item__content d-flex justify-content-center">
+                    <% unless @entry.blocked?(current_member) %>
+                      <% if @entry.favorite?(current_member) %>
+                        <%= button_to entry_unfavorite_path(@entry.id), method: :delete, class: "btn-add-to-cart" do %>
+                          <i class="material-icons" style="color: #eeb644">favorite_border</i>
+                        <% end %>
+                      <% else %>
+                        <%= button_to entry_favorite_path(@entry.id), method: :post,  class: "btn-add-to-cart" do %>
+                          <i class="material-icons">favorite_border</i>
+                        <% end %>
+                      <% end %>
+                      <span class="ml-3"><%= @entry.favors.count.to_s if @entry.favors.count > 0 %></span>
+
+                      <% if @entry.liked?(current_member) %>
+                        <%= button_to entry_unlike_path(@entry.id), method: :delete, class: "btn-add-to-cart" do %>
+                          <i class="material-icons ml-3" style="color: #eeb644">thumb_up_alt</i>
+                        <% end %>
+                      <% else %>
+                        <%= button_to entry_like_path(@entry.id), method: :post, class: "btn-add-to-cart" do %>
+                          <i class="material-icons ml-3">thumb_up_alt</i>
+                        <% end %>
+                      <% end %>
+                      <span class="ml-3"><%= @entry.likers.count.to_s if @entry.likers.count > 0 %></span>
+                  </div>
+                  <% if @entry.collected?(current_member) %>
+                    <%= button_to "uncollection", entry_uncollection_url(entry_id: @entry.id), method: :delete, class: "btn btn-brand" %>
+                  <% else %>
+                    <%= button_to "collection", entry_collection_url(entry_id: @entry.id), method: :post, class: "btn btn-brand" %>
+                  <% end %>
+                <% end %><%# End Blocked? %>
+              <% end %><%# End Turbo %>
+              </div>
+            </div>
+            <!-- End Product Item -->
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="product-description-review">
+                <!-- Product Description Tab Menu -->
+                <ul class="nav nav-tabs desc-review-tab-menu" id="desc-review-tab" role="tablist">
+                  <li>
+                    <a class="active" id="desc-tab" data-toggle="tab" href="#descriptionContent" role="tab">collectors(<%= @entry.collector_count %>)</a>
+                  </li>
+                  <li>
+                    <a id="profile-tab" data-toggle="tab" href="#reviewContent">Comments(<%= @entry.commontator_thread.comments.count %>)</a>
+                  </li>
+                </ul>
+
+                <!-- Product Description Tab Content -->
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="descriptionContent">
+                    <div class="product-rating-wrap">
+
+                      <div class="average-rating">
+                        <h4>Collectors</h4>
+                      </div>
+                      <!-- Listing Collectors -->
+                      <div class="display-ratings">
+                        <% @entry.collectors.each do |collector| %>
+                          <%= collector_list_tag(collector) %>
+                        <% end %>
+                        <div class="rating-form-wrapper">
+                          <p>Would you collect this item?</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="reviewContent">
+                    <div class="product-rating-wrap">
+                      <div class="average-rating">
+                        <h4>Comments</h4>
+                      </div>
+                      <!-- Comments -->
+                      <%= commontator_thread(@entry) %>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--== Simillarity ==-->
+        <div class="col-12">
+          <div class="shopping-cart-list-area">
+            <div class="shopping-cart-table table-responsive">
+              <h3 class="m-3">Similar Gears</h3>
+              <table class="table table-bordered text-center mb-0">
+
+                <tbody>
+                  <% @similars.each do |s| %>
+                    <%= entry_list_tag(s) %>
+                  <% end %> 
+                </tbody>
+              </table>
+
+              <h3 class="m-3">Feature of the Week</h3>
+              <table class="table table-bordered text-center mb-0">
+
+                <tbody>
+                  <% @features.each do |f| %>
+                    <%= entry_list_tag(f) %>
+                  <% end %>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Page Content Wrapper ==-->

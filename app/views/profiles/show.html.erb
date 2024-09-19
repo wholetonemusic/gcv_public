@@ -1,0 +1,192 @@
+<% content_for :title do %><%= @profile.login + " profile" %><% end %>
+<div class="bg-primary mdk-box js-mdk-box mb-0" style="height: 192px"
+                                                data-effects="parallax-background blend-background">
+  <div class="mdk-box__bg-front" style="background-image: url(
+    <% if @profile.background_image.present? %>
+      <%= url_for(@profile.background_image.variant(resize_to_limit: [700, 700])) %>
+    <% elsif @profile.avatar_image.present? %>
+      <%= url_for(@profile.avatar_image.variant(resize_to_limit: [700, 700], colorspace: "Gray")) %>
+    <% else %>
+      <%= "" %>
+    <% end %>
+    );
+    background-position: center;
+    ">
+  </div>
+</div>
+<div class="container-fluid page__container d-flex align-items-end position-relative mb-4">
+  <div class="avatar avatar-xxl position-absolute bottom-0 left-0 right-0">
+    <% if @profile.avatar_image.present? %>
+      <%= image_tag(@profile.avatar_image.variant(resize_to_limit: [150, 150]), class: "avatar-img rounded mt-4 ml-3 border-3") %>
+    <% else %>
+      <%= gravatar_image_tag(@profile.member, class: "avatar-img rounded mt-4 ml-3 border-3") %>
+    <% end %>
+  </div>
+</div>
+
+<div class="container-fluid page__container mb-3">
+  <div class="row flex-sm-nowrap">
+    <div class="col-sm-auto mb-3 mb-sm-0">
+      <h1 class="h2 mb-1"><%= @profile.login %></h1>
+      <%# Start Turbo %>
+      <%#= turbo_stream_from "profilevotes" %>
+      <%= turbo_frame_tag "profilevotes", data: { turbo: true } do %>
+
+        <% if !@profile.member.is_self?(current_member) %>
+          <% if !@profile.member.blocked?(current_member) && !current_member.blocked?(@profile.member) %>
+            <% if @profile.member.followed?(current_member) %>
+              <%= button_to "Unfollow", unfollow_url(follow_id: @profile.member.id), class: "btn btn-success", method: :patch %>
+            <% else %>
+              <%= button_to "Follow", follow_url(follow_id: @profile.member.id), class: "btn btn-success", method: :post %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <div class="dropdown m-2">
+          <a href="" data-toggle="dropdown" class="dropdown-toggle-split">
+            <span class="material-icons">more_horiz</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-left">
+            <% if can? :update, @profile %>	
+              <%= link_to 'Edit Profile', edit_profile_path(@profile), class: "dropdown-item", data: { turbo: false } %>
+            <% end %>
+
+            <% if !@profile.member.is_self?(current_member) %>
+              <% if !current_member.blocked?(@profile.member) %>
+                <%= link_to "Block", block_url(follow_id: @profile.member.id), class: "dropdown-item", method: :patch %>
+              <% elsif current_member.blocked?(@profile.member) %>
+                <%= link_to "Unblock", unblock_url(follow_id: @profile.member.id), class: "dropdown-item", method: :delete %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="text-muted d-flex align-items-center mb-2">
+          <i class="material-icons mr-1">account_box</i>
+          <div class="flex">Joined <%= @profile.member.created_at.strftime("%b %e, %Y") %></div>
+        </div>
+        <div class="d-flex d-flex-row mb-4">
+          <span class="flex col-6">
+            <%= link_to "Following", profile_show_following_path(@profile.id), data: { turbo: false } %>
+            : <%= @profile.member.follow_count %>
+        </span>
+        <span class="flex col">
+          <%= link_to "Followers", profile_show_followers_path(@profile.id), data: { turbo: false } %> 
+          : <%= @profile.member.follower_count %></span>
+        </div>
+      <% end %><%## turbo end  %>
+      <div class="card">
+        <ul class="nav nav-tabs nav-tabs-card">
+          <li class="nav-item">
+            <a class="nav-link active" href="#first" data-toggle="tab">
+              Gears(<%= @entries.count %>)
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#second" data-toggle="tab">
+              Collections(<%= @collections.count %>)
+            </a>
+          </li>
+        </ul>
+        <div class="card-body tab-content">
+          <div class="tab-pane active" id="first">
+            <%# Start Turbo %>
+            <%= turbo_stream_from @entries %>
+            <%= turbo_frame_tag "entriespage", data: { turbo: true } do %>
+              <div class="card-header">
+                <h5 class="card-title">
+                  Total <span class="text-primary"><%= @entries.count %></span> entries
+                </h5>
+              </div>
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <tbody class="list">
+                    <% @entries.each do |e| %>
+                      <tr>
+                        <td>
+                          <div class="media align-items-center">
+                            <%= link_to entry_path(e), class: "avatar avatar-4by3 avatar-sm mr-3", data: { turbo: false } do %>
+                              <% if e.entry_images.first.present? %>
+                                <%= image_tag e.entry_images.first.variant(resize_to_limit: [64, nil]), class: "avatar-img rounded" %>
+                              <% else %>
+                                no images
+                              <% end %>
+                            <% end %>
+                            <div class="media-body">
+                              <%= link_to entry_path(e), class: "text-body", data: { "turbo-frame": "_top", turbo: false } do %>
+                                <strong><%= e.heading %></strong>
+                              <% end %>
+                              <div class="text-muted small">
+                                <%= e.view_count %> views
+                              </div>
+                              <small class="text-black-70">owner : <%= link_to e.member.profile.login, profile_path(e.member.profile.id), data: { "turbo-frame": "_top", turbo: false } %></small>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+              <div class="justify-content-center mt-5">
+                <%= paginate @entries %>
+              </div>
+            <% end %><%## endturbo %>
+          </div>
+
+          <div class="tab-pane" id="second">
+            <%# Start Turbo %>
+            <%= turbo_stream_from @collections %>
+            <%= turbo_frame_tag "collectionspage", data: { turbo: true } do %>
+              <div class="card-header">
+                <h5 class="card-title">
+                  Total <span class="text-success"><%= @collections.count %></span> collections
+                </h5>
+              </div>
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <tbody class="list">
+                    <% @collections.each do |e| %>
+                      <tr>
+                        <td>
+                          <div class="media align-items-center">
+                            <%= link_to entry_path(e), class: "avatar avatar-4by3 avatar-sm mr-3", data: { "turbo-frame": "_top", turbo: false } do %>
+                              <% if e.entry_images.first.present? %>
+                                <%= image_tag e.entry_images.first.variant(resize_to_limit: [64, nil]), class: "avatar-img rounded" %>
+                              <% else %>
+                                no images
+                              <% end %>
+                            <% end %>
+                            <div class="media-body">
+                              <%= link_to entry_path(e), class: "text-body", data: { "turbo-frame": "_top", turbo: false } do %>
+                                <strong><%= e.heading %></strong>
+                              <% end %>
+                              <div class="text-muted small">
+                                <%= e.view_count %> views
+                              </div>
+                              <small class="text-black-70">owner : <%= link_to e.member.profile.login, profile_path(e.member.profile.id), data: { "turbo-frame": "_top", turbo: false } %></small>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+              <div class="justify-content-center mt-5">
+                <%= paginate @collections %>
+              </div>
+            <% end %><%## end turbo %>
+          </div>
+        </div>
+      </div>
+
+      <h4>About</h4>
+      <p class="text-black-70">
+      <%= simple_format(@profile.about_me) %>
+      </p>
+      <% profile_spec_tag(@profile).each do |spec| %>
+        <%= spec %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

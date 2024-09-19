@@ -1,0 +1,89 @@
+<div class="page-header-wrap bg-img" data-bg=<%= asset_pack_path("media/images/page-header-bg.jpg") %>>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="page-header-content">
+          <div class="page-header-content-inner">
+            <style>
+              .link-locale { text-align: left; }
+              .link-locale a { color: #eeb644; }
+            </style>
+            <div class="link-locale">
+              <%= link_to 'English', url_for(locale: :en), class: "link-locale mr-4" %>
+              <%= link_to 'Japanese', url_for(locale: :ja), class: "link-locale" %>
+            </div>
+
+            <h1 class="mt-1">Gear Entries</h1>
+
+            <ul class="breadcrumb">
+              <li><%= link_to "Home", root_path %></li>
+              <% if controller.controller_name == "entries" %>
+                <li class="current"><%= link_to "Entries", entries_path %></li>
+              <% elsif controller.controller_name == "categories" %>
+                <li><%= link_to "Entries", entries_path %></li>
+                <li class="current"><%= link_to @category.titleize, categories_path(@category) %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Page Header Area ==-->
+<!--== Search ==-->
+<div class="container container-wide">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-body mb-3 mt-3">
+        <!-- Form -->
+        <% if controller.controller_name == "categories" %>
+          <form action="/entries/categories/<%= @category %>">
+          <% elsif controller.controller_name == "entries" %>
+            <form action="/entries">
+            <% end %>        
+            <div class="d-flex align-items-center">
+              <!-- Input Search Word -->
+              <div class="flex search-form ml-3">
+                <input value="<%= @q if @q %>" class="string required form-control" required="required" aria-required="true" type="text" name="search[q]" id="search_q" placeholder="Search">
+                <% if controller.controller_name == "categories" %>
+                  <input type="hidden" id="category" name="category" value="<%= @category %>">
+                <% end %>
+                <button type="submit" name="commit" value="Search" class="btn" role="button" data-disable-with="Search">
+                  <i class="material-icons">search</i>
+                </button>
+              </div>
+            </div>
+            </form>
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center" style="white-space: nowrap;">
+              <%# purge text * Displaying #&lt;Proc:0x00007f2028208b28 /usr/local/bundle/gems/will_paginate-3.3.0/lib/will_paginate/view_helpers.rb:126&gt; <b>1&nbsp;-&nbsp;12</b> of <b>2048</b> in total %>
+              <small class="flex text-muted text-uppercase mr-3 mb-2 mt-2"><%= (page_entries_info @entries).sub(/#.*gt;/, "").html_safe %></small>
+              <div class="w-auto ml-sm-auto d-flex align-items-center mb-0">
+                <small class="text-muted text-uppercase mr-3 d-none d-sm-block">Sort by</small>
+                <% if controller.controller_name == "entries" %>              
+                  <%= link_to "Date", entries_path(sort: "created_at", resort: @resort == "asc" ? "desc" : "asc", search: @search), class: "sort desc small" %>
+                  <%= link_to "A-Z", entries_path(sort: "heading", resort: @resort == "asc" ? "desc" : "asc", search: @search), class: "sort small ml-2" %>
+                  <%= link_to "View", entries_path(sort: "view_count", resort: @resort == "asc" ? "desc" : "asc", search: @search), class: "sort small ml-2" %>
+                <% elsif controller.controller_name == "categories" %>
+                  <%= link_to "Date", categories_path(sort: "created_at", resort: @resort == "asc" ? "desc" : "asc", search: @search, category: @category), class: "sort desc small" %>
+                  <%= link_to "A-Z", categories_path(sort: "heading", resort: @resort == "asc" ? "desc" : "asc", search: @search, category: @category), class: "sort small ml-2" %>
+                  <%= link_to "View", categories_path(sort: "view_count", resort: @resort == "asc" ? "desc" : "asc", search: @search, category: @category), class: "sort small ml-2" %>
+                <% end %>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container container-wide">
+  <div class="row">
+    <% @entries.each do |entry| %>
+      <%= entry_card_tag(entry) %>
+    <% end %>
+
+    <div class="justify-content-center">
+      <%= paginate @entries %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+FactoryBot.define do
+  factory :social do
+    user_id { 1 }
+    provider { "MyString" }
+    status { "" }
+
+#    res {
+#      :id=>93500448,
+#      :id_str=>"93500448",
+#      :name=>"【DISCO Cherry VIP ROOM】@森園 長弘",
+#      :screen_name=>"morizononaga",
+#      :location=>"川 越から発信",
+#      :description=>"毎月第2木曜日の22時00分～23時はドリーム放送局FMルピナスで放送中の【DISCO Cherry】内の【DISCO Cherry VIP ROOM】のナビゲーターを担当。今年は脱フリーランスを目指します🎵",
+#      :url=>nil,
+#      :entities=>{:description=>{:urls=>[]}},
+#      :protected=>false,
+#      :followers_count=>767,
+#      :friends_count=>1401,
+#      :listed_count=>6,
+#      :created_at=>"Sun Nov 29 23:01:41 +0000 2009",
+#      :favourites_count=>7618,
+#      :utc_offset=>nil,
+#      :time_zone=>nil,
+#      :geo_enabled=>false,
+#      :verified=>false,
+#      :statuses_count=>2479,
+#      :lang=>nil,
+#      :status=>{
+#        :created_at=>"Sun May 22 05:38:15 +0000 2022",
+#        :id=>1528248857192083456,
+#        :id_str=>"1528248857192083456",
+#        :text=>"日曜日の昼下り。こちらの番組はいかがでしょうか？\nゲストはNY在住のジャズシンガー【KIRYU Nabuko】さんと秋田在住のジャズシンガー【HARUMI】さん です。是非ご覧下さいませ\nhttps://t.co/kGl7IV29NW",
+#        :truncated=>false,
+#        :entities=>{
+#          :hashtags=>[],
+#          :symbols=>[],
+#          :user_mentions=>[],
+#          :urls=>[{
+#            :url=>"https://t.co/kGl7IV29NW",
+#            :expanded_url=>"https://youtu.be/r30PfUhE3JA",
+#            :display_url=>"youtu.be/r30PfUhE3JA",
+#            :indices=>[93,116]
+#          }]
+#        },
+#        :source=>"<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+#        :in_reply_to_status_id=>nil,
+#        :in_reply_to_status_id_str=>nil,
+#        :in_reply_to_user_id=>nil,
+#        :in_reply_to_user_id_str=>nil,
+#        :in_reply_to_screen_name=>nil,
+#        :geo=>nil,
+#        :coordinates=>nil,
+#        :place=>nil,
+#        :contributors=>nil,
+#        :is_quote_status=>false,
+#        :retweet_count=>0,
+#        :favorite_count=>3,
+#        :favorited=>false,
+#        :retweeted=>false,
+#        :possibly_sensitive=>false,
+#        :lang=>"ja"
+#      },
+#      :contributors_enabled=>false,
+#      :is_translator=>false,
+#      :is_translation_enabled=>false,
+#      :profile_background_color=>"C0DEED",
+#      :profile_background_image_url=>"http://abs.twimg.com/images/themes/theme1/bg.png",
+#      :profile_background_image_url_https=>"https://abs.twimg.com/images/themes/theme1/bg.png",
+#      :profile_background_tile=>false,
+#      :profile_image_url=>"http://pbs.twimg.com/profile_images/1520792704803778561/p7QUmdBe_normal.jpg",
+#      :profile_image_url_https=>"https://pbs.twimg.com/profile_images/1520792704803778561/p7QUmdBe_normal.jpg",
+#      :profile_banner_url=>"https://pbs.twimg.com/profile_banners/93500448/1652607309",
+#      :profile_link_color=>"1DA1F2",
+#      :profile_sidebar_border_color=>"C0DEED",
+#      :profile_sidebar_fill_color=>"DDEEF6",
+#      :profile_text_color=>"333333",
+#      :profile_use_background_image=>true,
+#      :has_extended_profile=>true,
+#      :default_profile=>true,
+#      :default_profile_image=>false,
+#      :following=>true,
+#      :live_following=>false,
+#      :follow_request_sent=>false,
+#      :notifications=>false,
+#      :muting=>false,
+#      :blocking=>false,
+#      :blocked_by=>false,
+#      :translator_type=>"none",
+#      :withheld_in_countries=>[]
+#    }
+  end
+end

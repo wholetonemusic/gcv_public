@@ -1,0 +1,22 @@
+<!-- User dropdown -->
+<li class="nav-item dropdown ml-1 ml-md-3">
+  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+    <% if current_member.profile.avatar_image.present? %>
+      <%= image_tag(current_member.profile.avatar_image.variant(resize_to_limit: [100, 100]), class: "rounded-circle", style: "width: 30px; height: 30px; object-fit: cover;") %>
+    <% else %>    
+      <%= gravatar_image_tag(current_member, class: "rounded-circle", width: "30") %>
+    <% end %>
+  </a>
+  <div class="dropdown-menu dropdown-menu-right">
+    <%= link_to member_root_path, class: "dropdown-item" do %>
+      <i class="material-icons">dashboard</i> Home Dashboard
+    <% end %>
+    <%= link_to profile_path(current_member.profile.id), class: "dropdown-item" do %>
+      <i class="material-icons">person</i> Public Profile
+    <% end %>
+    <%= link_to destroy_member_session_path, class: "dropdown-item", method: 'delete' do %>
+      <i class="material-icons">lock</i> Logout
+    <% end %>
+  </div>
+</li>
+<!-- // END User dropdown -->

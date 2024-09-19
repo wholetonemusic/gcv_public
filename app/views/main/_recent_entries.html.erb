@@ -1,0 +1,44 @@
+<% @recent_entries.each do |entry| %>
+  <!-- Start Product Item -->
+  <div class="col">
+    <div class="product-item">
+      <div class="product-item__thumb">
+        <a href=<%= entry_path(entry) %>>
+          <%= two_thumb_image_tag(entry)[0] %>
+          <%= two_thumb_image_tag(entry)[1] %>
+        </a>
+      </div>
+
+      <div class="product-item__content">
+        <div class="ratting mt-3">
+          <%= ratting_stars_tag(entry)[0] %>
+          <%= ratting_stars_tag(entry)[1] %>
+          <%= ratting_stars_tag(entry)[2] %>
+          <%= ratting_stars_tag(entry)[3] %>
+          <%= ratting_stars_tag(entry)[4] %>
+        </div>
+        <h4 class="title"><%= link_to entry.heading, entry_path(entry) %></h4>
+        <span class="price"><i class="material-icons">double_arrow</i></span>
+      </div>
+
+      <div class="product-item__action">
+        <button class="btn-add-to-cart">
+          <%= link_to "show", entry_path(entry) %>
+        </button>
+        <button class="btn-add-to-cart">
+          <%= link_to "details", entry_path(entry) %>
+        </button>
+        <button class="btn-add-to-cart">
+          <%= link_to entry_path(entry) do %>
+            <i class="material-icons">double_arrow</i>
+          <% end %>
+        </button>
+      </div>
+
+      <div class="product-item__sale">
+        <span class="sale-txt">owner : <%= entry.profile.login %></span>
+      </div>
+    </div>
+  </div>
+  <!-- End Product Item -->
+<% end %>

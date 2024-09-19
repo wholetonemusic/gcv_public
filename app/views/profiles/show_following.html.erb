@@ -1,0 +1,47 @@
+<% content_for :title do %><%= @profile.login + " following" %><% end %>
+<div class="container-fluid page__container">
+  <ol class="breadcrumb mt-5">
+    <li class="breadcrumb-item">
+      <%= link_to 'Home', member_root_path %> 
+    </li>
+    <li class="breadcrumb-item active">
+      <%= link_to @profile.login, profile_path(@profile) %>
+    </li>
+    <li class="breadcrumb-item active">
+      <%= link_to 'Following Member', profile_show_following_path(@profile.id) %>
+    </li>
+  </ol>
+  <h1 class="h2"><%= @profile.login %> Following</h1>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">
+	<span class="text-primary"><%= @profile.member.follow_count %></span> following
+      </h5>
+    </div>
+    <div class="card-body">
+      <h4>Following</h4>
+      <div class="mb-4">
+	<% @follows.each do |v| %>
+        <div class="d-flex p-1 mb-2">
+	  <%= link_to profile_path(v.votable.profile.id), class: 'avatar avatar-sm mr-3' do %>
+	    <% if v.votable.profile.avatar_image.present? %>
+            <%= image_tag(v.votable.profile.avatar_image.variant(resize_to_limit: [150, 150]), class: "avatar-img") %>
+            <% else %>    
+            <%= gravatar_image_tag(v.votable, class: "avatar-img") %>
+            <% end %>
+          <% end %>
+          <div class="flex mr-2">
+	    <%= link_to profile_path(v.votable.profile.id), class: 'text-body' do %>
+	      <strong><%= v.votable.profile.login %></strong>
+	    <% end %>
+	    <p class="text-black-70 m-0"><small><%= v.votable.profile.about_me.truncate(50) if  v.votable.profile.about_me %></small></p>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="justify-content-center mb-5">
+    <%= paginate @follows %>
+  </div>
+</div>

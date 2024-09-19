@@ -1,0 +1,82 @@
+<% content_for :title do %>Manage Favorites<% end %>
+<div class="container-fluid page__container">
+  <ol class="breadcrumb mt-5">
+    <li class="breadcrumb-item">
+      <%= link_to "Home", member_root_path %>
+    </li>
+    <li class="breadcrumb-item active"><%= link_to "Manage Favorites", manages_entry_favorites_path %></li>
+  </ol>
+  <h1 class="h2">Manage Favorites</h1>
+  <div
+    class="card card-body border-left-3 border-left-primary navbar-shadow mb-4"
+  >
+    <form action="/manages/entry_favorites">
+      <div class="d-flex flex-wrap2 align-items-center mb-headings">
+        <div class="flex search-form ml-3 search-form--light">
+          <input value="<%= @q if @q %>" type="text" class="form-control" name="search[q]" id="search_q" placeholder="Search">
+          <button class="btn" type="submit" role="button" data-disable-with="Search"><i class="material-icons">search</i></button>
+        </div>
+      </div>
+
+      <div
+        class="d-flex flex-column flex-sm-row align-items-sm-center"
+        style="white-space: nowrap"
+      >
+        <small class="flex text-muted text-uppercase mr-3 mb-2 mb-sm-0"
+          ><%= (page_entries_info @favorites).sub(/#.*gt;/, "").html_safe %></small
+        >
+      </div>
+    </form>
+  </div>
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table m-0">
+        <tbody class="list">
+	  <% @favorites.each do |v| %>
+          <tr>
+            <td>
+              <div class="media align-items-center">
+              <%= link_to entry_path(v.votable.id), class: "avatar avatar-lg avatar-4by3 mb-3 mr-3" do %>
+                <% if v.votable.entry_images.present? %>
+                <%= image_tag v.votable.entry_images.first.variant(resize_to_limit: [85, nil]), class: "avatar-img rounded" %>
+                <% else %>
+                "THIS ITEMS DO NOT HAVE A IMAGE"
+                <% end %>
+              <% end %>
+                <div class="media-body">
+		  <%= link_to entry_path(v.votable.id), class: "text-body" do %> 
+		  <strong><%= v.votable.heading %></strong></a>
+	          <% end %>
+		  <div class="text-muted small">
+		    <i class="material-icons small">visibility</i>
+		    <%= v.votable.view_count %>
+		    <i class="material-icons small ml-2">library_add_check</i>
+		    <%= v.votable.collector_count %>
+		    <i class="material-icons small ml-2">favorite_border</i>
+		    <%= v.votable.favors.count %>
+		    <i class="material-icons small ml-2">thumb_up_alt</i>
+		    <%= v.votable.likers.count %>
+                  </div>
+                  <small class="text-black-70"
+                    >owner : <%= link_to v.votable.owner.login, profile_path(v.votable.owner.id) %></small
+                  >
+                </div>
+              </div>
+            </td>
+	    <td class="text-center">
+	      <%= link_to entry_unfavorite_path({entry_id: v.votable.id, manage: 'member'}),
+		data: { confirm: "Are you sure you want to delete this favarite gear?" }, 
+		method: :delete do %>
+		<i class="material-icons">highlight_off</i>
+	      <% end %>
+            </td>
+          </tr>
+	  <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="justify-content-center mb-5">
+    <%= paginate @favorites %>
+  </div>
+</div>

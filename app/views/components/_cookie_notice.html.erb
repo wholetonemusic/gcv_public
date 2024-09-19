@@ -1,0 +1,49 @@
+<% if I18n.locale == :ja %>
+<script>
+      $(function() {
+        var $div, $btn;
+
+        $btn = $('<button style="color:#fff;padding:10px 20px;border:1px solid #32cd32;background-color:#32cd32" />').html('同意').on('click', function(e) {
+          e.preventDefault();
+
+          var date = new Date();
+          date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
+          var expires = 'expires=' + date.toUTCString();
+          document.cookie =  'accept_cookies=true;' + expires + ';path=/';
+
+          $div.remove();
+        });
+
+        $div = $('<div/>').css({ position: 'fixed', zIndex: 999, backgroundColor: '#000', fontColor: '#fff', opacity: '75%', width: '80%', bottom: '10px', left: '50%', transform: 'translate(-50%)', padding: '20px' }).html('<div style="float:left"><h5 style="color:#ff4500">Cookies & Privacy</h5><div style="color:#fff">このウェブサイトでは、最適なオンライン体験を提供するためにCookieを使用しています。</div></div><div style="float:right;color:#fff;margin-top:30px"><a href="/policy" style="color:#fff;text-decoration:underline">詳細</a>&nbsp;&nbsp;<span></span></div><div style="clear:both"></div>');
+
+        if (document.cookie.includes('accept_cookies') === false) {
+          $('body').append($div);
+          $div.find('span').append($btn);
+        }
+      });
+    </script>
+<% else %>
+<script>
+      $(function() {
+        var $div, $btn;
+
+        $btn = $('<button style="color:#fff;padding:10px 20px;border:1px solid #32cd32;background-color:#32cd32" />').html('Accept').on('click', function(e) {
+          e.preventDefault();
+
+          var date = new Date();
+          date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
+          var expires = 'expires=' + date.toUTCString();
+          document.cookie =  'accept_cookies=true;' + expires + ';path=/';
+
+          $div.remove();
+        });
+
+        $div = $('<div/>').css({ position: 'fixed', zIndex: 999, backgroundColor: '#000', fontColor: '#fff', opacity: '75%', width: '80%', bottom: '10px', left: '50%', transform: 'translate(-50%)', padding: '20px' }).html('<div style="float:left"><h5 style="color:#ff4500">Cookies & Privacy</h5><div style="color:#fff">This website uses cookies to ensure you get the best experience on our websites.</div></div><div style="float:right;color:#fff;margin-top:30px"><a href="/policy" style="color:#fff;text-decoration:underline">Learn more</a>&nbsp;&nbsp;<span></span></div><div style="clear:both"></div>');
+
+        if (document.cookie.includes('accept_cookies') === false) {
+          $('body').append($div);
+          $div.find('span').append($btn);
+        }
+      });
+    </script>
+  <% end %>

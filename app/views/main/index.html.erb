@@ -1,0 +1,237 @@
+<% content_for :twitter_cards do %>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:title" content="Guitars Archives Project Site">
+  <meta property="og:description" content="Post Your Gears!">
+  <meta property="og:image" content="https://guitar-cv.com/description.jpg">
+<% end %>
+<!--== Start Slider Area Wrapper ==-->
+<div class="slider-area-wrapper">
+  <div class="slider-content-active">
+    <div class="slider-slide-item bg-img" data-bg=<%= asset_pack_path "media/images/g-slider/slider-1.png" %>>
+      <div class="container container-wide h-100">
+        <div class="row align-items-center h-100">
+          <div class="col-lg-6">
+            <div class="slide-content">
+              <div class="slide-content-inner">
+                <h3 style="font-size: 1.25em"><%= t('.desc1') %></h3>
+                <h2 style="font-size: 2.5em">GuitarCollectionVirtual</h2>
+                <a class="btn btn-brand rounded" href="entries">all guitars</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slider-slide-item bg-img" data-bg=<%= asset_pack_path "media/images/g-slider/slider-2.png" %>>
+      <div class="container container-wide h-100">
+        <div class="row align-items-center h-100">
+          <div class="col-12">
+            <div class="slide-content">
+              <div class="slide-content-inner">
+                <h3><%= t('.desc2')%></h3>
+                <h2>Post Your Guitars</h2>
+                <a class="btn btn-brand rounded" href="entries">Explore Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slider-slide-item bg-img" data-bg=<%= asset_pack_path "media/images/g-slider/slider-3.png" %>>
+      <div class="container container-wide h-100">
+        <div class="row align-items-center h-100">
+          <div class="col-24">
+            <div class="slide-content">
+              <div class="slide-content-inner">
+                <h3>GOING FOR THE</h3>
+                <h2>ULTIMATE GUITAR ARCHIVE</h2>
+                <a class="btn btn-brand rounded" href="/members/sign_up">Join Us</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Slider Area Wrapper ==-->
+
+<!--== Start Banner Area Wrapper ==-->
+<div class="banner-area-wrapper banner-mt">
+  <div class="container container-wide">
+    <div class="row">
+      <div class="col-md-6 col-lg-4">
+        <div class="banner-item">
+          <div class="banner-item__img">
+            <a href="/entries/categories/pedal"><img class="border border-white rounded" src=<%= asset_pack_path "media/images/a-images/amp-1.png" %> /></a>
+          </div>
+          <div class="banner-item__txt">
+            <h3>MAKE IT SOUND</h3>
+            <h2>WHAT'S A GOOD TONE FOR YOU?</h2>
+            <a class="btn btn-brand rounded" href="/entries/categories/amplifier">Amplifiers</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="banner-item">
+          <div class="banner-item__img">
+            <a href="#"><img class=" border border-white rounded" src=<%= asset_pack_path "media/images/p-images/pedal-1.png" %>  %></a>
+          </div>
+          <div class="banner-item__txt">
+            <h3>IDEAS FOR</h3>
+            <h2>SET UP THE IDEAL PEDALBOARD</h2>
+            <a class="btn btn-brand rounded" href="/entries/categories/pedal">Pedals</a>
+          </div>
+        </div>
+      </div>
+      <!-- add sence -->
+      <div class="col-md-6 col-lg-4">
+        <div class="banner-item">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9833912683433003"
+                        crossorigin="anonymous"></script>
+          <!-- gcv_side_bar -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-9833912683433003"
+               data-ad-slot="7501886838"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Banner Area Wrapper ==-->
+
+<!--== Start Call to Action Area ==-->
+<div class="call-to-action-area sm-top">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-lg-4">
+        <div class="call-to-action-item">
+          <div class="call-to-action-item__icon">
+            <%= image_pack_tag "media/images/icon-1.png", alt: "post gear" %>
+          </div>
+          <div class="call-to-action-item__info">
+            <h3><%= t '.call1' %></h3>
+            <p><%= t '.action1' %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-lg-4">
+        <div class="call-to-action-item">
+          <div class="call-to-action-item__icon">
+            <%= image_pack_tag "media/images/icon-2.png", alt: "collect gear" %>
+          </div>
+          <div class="call-to-action-item__info">
+            <h3><%= t '.call2' %></h3>
+            <p><%= t '.action2' %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-lg-4">
+        <div class="call-to-action-item">
+          <div class="call-to-action-item__icon">
+            <%= image_pack_tag "media/images/icon-3.png", alt: "discuss" %>
+          </div>
+          <div class="call-to-action-item__info">
+            <h3><%= t '.call3' %></h3>
+            <p><%= t '.action3' %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Call to Action Area ==-->
+
+<!--== Start Call to action Wrapper ==-->
+<div class="call-to-action-area">
+  <div class="call-to-action-content-area bg-img" data-bg=<%= asset_pack_path "media/images/bg-1.jpg" %>>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="call-to-action-txt mt-3">
+            <h2><%= t '.call_action' %></h2>
+            <%= link_to t('.sign_up'), new_member_registration_path, class: "btn btn-brand" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Call to action Wrapper ==-->
+
+<!--== Start Promotion Code Banner Area ==-->
+<div class="promotion-code-area-wrapper sm-top">
+  <div class="container container-wide">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="promotion-code-banner-item mb-sm-30">
+          <%= pie_chart charts_path("entries_summary_1") %>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="promotion-code-banner-item">
+          <%= pie_chart charts_path("entries_summary_2") %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Promotion Code Banner Area ==-->
+
+<!--== Start Recommend Area ==-->
+<div class="best-seller-products-area sm-top">
+  <div class="container container-wide">
+    <div class="row">
+      <div class="col-lg-5 m-auto text-center">
+        <div class="section-title">
+          <h2 class="h3">Recommend Gears</h2>
+          <p>Now <%= Entry.all.count %> gears have been posted. Here are this week's recommendations.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="product-wrapper">
+          <div class="product-carousel">
+            <%= render "recommend_entries" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Recommend Area ==-->
+
+<!--== Reacent Entry Area Wrapper ==-->
+<div class="products-area-wrapper sm-top">
+  <div class="container container-wide">
+    <div class="row">
+      <div class="col-lg-5 m-auto text-center">
+        <div class="section-title">
+          <h2 class="h3">recent entry</h2>
+          <p>Recent guitar submissions from guitarists around the world</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="product-wrapper columns-5">
+          <%= render "recent_entries" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--== End Products Area Wrapper ==-->

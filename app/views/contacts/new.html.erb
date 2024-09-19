@@ -1,0 +1,56 @@
+<% content_for :title do %><%= "contact message form" %><% end %>
+<div class="contact-form-wrapper sm-top">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="contact-form-content">
+          <h2>Get In Touch</h2>
+
+          <div class="contact-form-wrap">
+            <%= form_for @contact do |f| %>
+              <div class="contact-form-inner">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-item">
+                      <%= f.label :name %>
+                      <%= f.text_field  :name, required: true %>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input-item">
+                      <%= f.label :email %>
+                      <%= f.text_field :email, required: true %>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="input-item">
+                      <%= f.label :message %>
+                      <%= f.text_area :message, rows: 8, cols: 40, required: true, class: "contact-form-text-area", placeholder: "Send me a message"%>
+                    </div>
+                  </div>
+
+                  <div class= "d-none">
+                    <%= f.label :nickname %>
+                    <%= f.text_field :nickname, :hint => 'Leave this field blank!' %>
+                  </div>
+
+                  <div class="col-12">
+                    <p><%= flash[:recaptcha_error] %></p>
+                    <%= recaptcha_v3(action: "contact") %>
+                  </div>
+                  <div class="col-12">
+                    <div class="input-item">
+                      <%= f.button 'Send Message', class: 'btn btn-brand' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<% content_for :title do %>Notifications<% end %>
+<div class="container-fluid page__container">
+  <ol class="breadcrumb mt-5">
+    <li class="breadcrumb-item">
+      <%= link_to "Home", member_root_path %>
+    </li>
+    <li class="breadcrumb-item active">
+      <%= link_to 'Notifications', notifications_path %>
+    </li>
+  </ol>
+  <h1 class="h2">Notifications</h1>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">
+        <%= (page_entries_info @notifications).sub(/#.*gt;/, "").html_safe %> Notifications
+      </h5>
+    </div>
+
+    <div class="card-body">
+      <div class="media flex-wrap align-items-center">
+        <div class="mb-4">
+          <ul class="nav navbar-nav flex-nowrap">
+            <li class="nav-item">
+              <div class="position-relative">
+                <% if @notifications.present? %>
+                  <% @notifications.each do |notice| %>
+                    <a href=<%= url_for notification_path(notice) %> class="list-group-item list-group-item-action" data-method="put">
+                      <span class="d-flex align-items-center mb-1">
+                        <small class="text-muted"><%= time_ago_in_words(notice.created_at) %> ago</small>
+                      </span>
+                      <span class="d-flex">
+                        <span class="avatar avatar-xs mr-2">
+                          <% if notice.sender.avatar_image.present? %>
+                            <%= image_tag notice.sender.avatar_image.variant(resize_to_limit: [150, 150]), class: "avatar-img rounded-circle" %>
+                          <% else %>
+                            <%= gravatar_image_tag(notice.sender.member, class: "avatar-img rounded-circle") %>
+                          <% end %>
+                        </span>
+                        <span class="flex d-flex flex-column">
+                          <strong><%= notice.sender.login %></strong>
+                          <span class="text-black-70"><%= notice.params[:heading] %></span>
+                        </span>
+                      </span>
+                    </a>
+
+                  <% end %>
+                <% else %>
+                  <strong>No Notification</strong></div>
+            <% end %>
+            </li>
+          </ul>
+          <div class="justify-content-center mb-5">
+            <%= paginate @notifications %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

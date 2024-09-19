@@ -1,0 +1,18 @@
+<% content_for :title do %><%= "post new gear form" %><% end %>
+<div class="container-fluid page__container">
+  <ol class="breadcrumb mt-5">
+    <li class="breadcrumb-item"><%= link_to 'Home', member_root_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Youre Entries', manages_my_entries_path %></a></li>
+    <li class="breadcrumb-item active">New Entry</li>
+  </ol>
+
+<%= render "form", entry: @entry %>
+
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <%= link_to "Back", member_root_path, class: "btn btn-success", style: "float: right;" %>
+      </div>
+    </div>
+  </div>
+</div>

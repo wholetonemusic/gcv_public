@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <title><%= content_for?(:title) ? yield(:title) : "GuitarCollectionVirtual" %> | GCV - Guitars Archives Project Site</title>
+    <%= yield(:alternate) if content_for?(:alternate) %>
+    <%= yield(:twitter_cards) if content_for?(:twitter_cards) %>
+
+    <!--== Favicon ==-->
+    <%= favicon_pack_tag 'favicon.ico' %>
+    <!--== Google Fonts ==-->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700%7CPoppins:400,400i,500,600&display=swap" rel="stylesheet">
+    <%= stylesheet_pack_tag "application", "entry_application", media: "all", "data-turbolinks-track": "reload" %>
+    <%= javascript_pack_tag "application", "entry_application", "data-turbolinks-track": "reload" %>
+    <!--== Google Charts ==-->
+    <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+    <%= yield :head %>
+    <!--== GoogleAdd ==-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9833912683433003"
+                  crossorigin="anonymous">
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CK6JWEHRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8CK6JWEHRL');
+    </script>
+  </head>
+
+  <body>
+    <!--== Start Header Area ==-->
+    <header class="header-area">
+      <div class="container container-wide">
+        <div class="row align-items-center">
+          <div class="col-sm-4 col-lg-2">
+            <div class="site-logo text-center text-sm-left">
+              <%= link_to root_path do %>
+                <%= image_pack_tag "media/images/logo.png", alt: "GCV" %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="col-lg-7 d-none d-lg-block">
+            <ul class="main-menu nav">
+              <li><%= link_to "Home", root_path %></li>
+              <%= render "entries/categories" %>
+            </ul>
+          </div>
+
+          <div class="col-sm-8 col-lg-3">
+            <div class="site-action d-flex justify-content-center justify-content-sm-end align-items-center">
+              <% unless member_signed_in? %>
+                <ul class="login-reg-nav nav">
+                  <li><%= link_to "Sign In", new_member_session_path %></li>
+                  <li><%= link_to "Sign Up", new_member_registration_path %></li>
+                </ul>
+              <% end %>
+
+              <div class="mini-cart-wrap">
+                <a href="#" class="btn-mini-cart">
+                  <% if member_signed_in? %>
+                    <% if current_member.profile.avatar_image.present? %>
+                      <%= image_tag(current_member.profile.avatar_image.variant(resize_to_limit: [150, 150]), class: "rounded-circle", style: "width: 30px; height: 30px; object-fit: cover;") %>
+                    <% else %>
+                      <%= gravatar_image_tag(current_member, class: "rounded-circle", width: "30") %>
+                    <% end %>
+                  <% else %>
+                    <span class="material-icons pt-1">account_circle</span>
+                  <% end %>
+                </a>
+
+                <div class="mini-cart-content">
+                  <div class="mini-cart-product">
+                    <div class="mini-product">
+                      <div class="mini-product__info">
+                        <h2 class="title"><%= link_to "Member Home", member_root_path %></h2>
+                      </div>
+                    </div>
+
+                    <div class="mini-product">
+                      <div class="mini-product__info">
+                        <h2 class="title"><%= link_to 'My Entries', manages_my_entries_path %></h2>
+                      </div>
+                    </div>
+
+                    <div class="mini-product">
+                      <div class="mini-product__info">
+                        <h2 class="title"><%= link_to 'My Collection', manages_entry_collections_path %></h2>
+                      </div>
+                    </div> 
+
+                    <div class="mini-product">
+                      <div class="mini-product__info">
+                        <h2 class="title"><%= link_to 'My Favorites', manages_entry_favorites_path %></h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="responsive-menu d-lg-none">
+                <button class="btn-menu">
+                  <i class="material-icons pt-1" style="color: white;">menue</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!--== End Header Area ==-->
+
+    <%= render "partial/flash" %>
+    <%= yield %>
+
+    <!--== Start Newsletter Area ==-->
+    <div class="newsletter-area-wrapper mt-5">
+      <div class="container container-wide">
+        <div class="newsletter-area-inner bg-dark">
+          <div class="row">
+            <div class="col-lg-8 col-xl-5 m-auto">
+              <div class="newsletter-content text-center">
+                <h4>POST YOUR <span>GUITAR</span> !</h4>
+                <h2>GuitarCollectionVirtual</h2>
+                <p><%= t 'summary1' %><br />
+                <%= t 'summary2' %><br /><%= t 'summary3' %></p>
+                <div class="newsletter-form-wrap">
+                  <div class="form-content">
+                    <%= link_to(t('join_now'), new_member_registration_path, class: "btn btn-brand") %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--== End Newsletter Area ==-->
+    <!--== Start of SOCIAL BAR ==-->
+    <table class="mt-5" width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td align="center" valign="middle" width="100%" bgcolor="#efefef">
+          <table width="100%" align="center" class="mobile" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+            <tr>
+              <td align="center" valign="middle" width="100%" class="clump" style="padding:20px 0 20px 0;">
+                <a href="https://twitter.com/wholetone"><i class="fab fa-twitter fa-2x" style="display:inline-block; padding-right:10px; padding-left:10px; border:0 none; outline:none;"></i></a>
+                <a href="https://www.facebook.com/guitar.collection.virtual"><i class="fab fa-facebook fa-2x" style="display:inline-block; padding-right:10px; padding-left:10px; border:0 none; outline:none;"></i></a>
+                <a href="https://www.instagram.com/guitarcv/"><i class="fab fa-instagram fa-2x" style="display:inline-block; padding-right:10px; padding-left:10px; border:0 none; outline:none;"></i></a>
+                <a href="https://www.pinterest.jp/wholetone/"><i class="fab fa-pinterest-square fa-2x" style="display:inline-block; padding-right:10px; padding-left:10px; border:0 none; outline:none;"></i></a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--== End of SOCIAL BAR ==-->
+
+    <%= render "components/nav-footer" %>
+
+    <!-- Scroll Top Button -->
+    <button class="btn-scroll-top">
+      <i class="material-icons">expand_less</i>
+    </button>
+
+
+    <!--== Start Responsive Menu Wrapper ==-->
+    <aside class="off-canvas-wrapper off-canvas-menu">
+      <div class="off-canvas-overlay"></div>
+      <div class="off-canvas-inner">
+        <!-- Start Off Canvas Content -->
+        <div class="off-canvas-content">
+          <div class="off-canvas-header">
+            <div class="logo">
+              <a href="/"><img src=<%= asset_pack_path("media/images/logo.png") %> alt="Logo"></a>
+            </div>
+            <div class="close-btn">
+              <button class="btn-close"></button>
+            </div>
+          </div>
+
+          <!-- Content Auto Generate Form Main Menu Here -->
+          <div class="res-mobile-menu mobile-menu">
+
+          </div>
+        </div>
+      </div>
+    </aside>
+    <!--== End Responsive Menu Wrapper ==-->
+    <!--== Cookie Notice ==-->
+    <%= render "components/cookie_notice" %>
+  </body>
+</html>

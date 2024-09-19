@@ -1,0 +1,82 @@
+<% content_for :title do %><%= "Member Sign Up" %><% end %>
+<body class="login">
+  <div class="d-flex align-items-center" style="min-height: 100vh">
+    <div class="col-sm-8 col-md-6 col-lg-4 mx-auto" style="min-width: 300px;">
+      <div class="text-center mt-5 mb-1">
+        <div class="avatar avatar-lg">
+          <img src=<%= asset_pack_path("media/images/primary.svg") %> class="avatar-img" alt="Logo" />
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mb-5 navbar-light">
+        <a href="/" class="navbar-brand m-0">GCV</a>
+      </div>
+      <div class="card navbar-shadow">
+        <div class="card-header text-center">
+          <h4 class="card-title">Sign Up</h4>
+          <p class="card-subtitle">Create a new account</p>
+        </div>
+        <div class="card-body">
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <% resource.errors.full_messages.each do |message| %>
+            <b><%= message %></b>
+          <% end %>
+            <div class="form-group">
+              <label class="form-label" for="member_email">Email address:</label>
+              <div class="input-group input-group-merge">
+                <input autocomplete="email" class="form-control form-control-prepended" autofocus="autofocus" required="required" aria-required="true" type="email" value="" name="member[email]" id="member_email" placeholder="Your email address" />
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <span class="far fa-envelope"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="member_password">Password:</label>
+              <div class="input-group input-group-merge">
+                <input autocomplete="new-password" class="form-control form-control-prepended" required="required" aria-required="true" type="password" name="member[password]" id="member_password"  placeholder="Password 6 characters minimum" />
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <span class="far fa-key"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="member_password_confirmation">Password:</label>
+              <div class="input-group input-group-merge">
+                <input autocomplete="new-password" class="form-control form-control-prepended" required="required" aria-required="true" type="password" name="member[password_confirmation]" id="member_password_confirmation"  placeholder="Confirm password" />
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <span class="far fa-key"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group text-center">
+              <p><%= flash[:recaptcha_error] %></p>
+              <%= recaptcha_v3(action: "signup") %>
+            </div>
+
+            <div class="form-group">
+              <input type="submit" name="commit" value="Sign up" class="btn  btn-primary btn-block mb-3" data-disable-with="Sign up" />
+            </div>
+            <div class="form-group text-center mb-0">
+              <div class="custom-control custom-checkbox">
+                <input id="terms" type="checkbox" class="custom-control-input" checked required="">
+                <label for="terms" class="custom-control-label text-black-70">I agree to the <a href="/terms" class="text-black-70" style="text-decoration: underline;">Terms of Use</a></label>
+              </div>
+            </div>
+
+          <% end %>
+
+        </div>
+
+        <div class="card-footer text-center text-black-50">    
+          Already signed up? <a href="/members/sign_in">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>

@@ -1,0 +1,43 @@
+<!-- Notifications dropdown -->
+<% @notifications = current_member.notifications.unread.includes(:sender).limit(5) %>
+<li class="nav-item dropdown dropdown-notifications dropdown-menu-sm-full">
+  <button class="nav-link btn-flush dropdown-toggle" type="button" data-toggle="dropdown" data-dropdown-disable-document-scroll data-caret="false">
+    <i class="material-icons">notifications</i>
+    <span class="badge badge-notifications badge-danger"><%= current_member.notifications.count %></span>
+  </button>
+  <div class="dropdown-menu dropdown-menu-right">
+    <div data-perfect-scrollbar class="position-relative">
+      <% if @notifications.present? %>
+        <div class="dropdown-header"><strong>Notifications</strong></div>
+        <div class="list-group list-group-flush mb-0">
+          <% @notifications.each do |notice| %>
+            <a href=<%= url_for notification_path(notice) %> class="list-group-item list-group-item-action" data-method="put">
+              <span class="d-flex align-items-center mb-1">
+                <small class="text-muted"><%= time_ago_in_words(notice.created_at) %> ago</small>
+              </span>
+              <span class="d-flex">
+                <span class="avatar avatar-xs mr-2">
+                  <% if notice.sender.avatar_image.present? %>
+                    <%= image_tag notice.sender.avatar_image.variant(resize_to_limit: [100, 100]), class: "avatar-img rounded-circle" %>
+                  <% else %>
+                    <%= gravatar_image_tag(notice.sender.member, class: "avatar-img rounded-circle") %>
+                  <% end %>
+                </span>
+                <span class="flex d-flex flex-column">
+                  <strong><%= notice.sender.login %></strong>
+                  <span class="text-black-70"><%= notice.params[:heading] %></span>
+                </span>
+              </span>
+            </a>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="dropdown-header"><strong>No Recent Notification</strong></div>
+      <% end %>
+    </div>
+    <span class="flex d-flex flex-column">
+      <%= link_to "All Notifications", notifications_path, class: 'btn btn-sm btn-primary' %>
+    </span>
+  </div>
+</li>
+<!-- // END Notifications dropdown -->

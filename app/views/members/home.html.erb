@@ -1,0 +1,310 @@
+<div class="container-fluid page__container">
+  <ol class="breadcrumb mt-5">
+    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+  </ol>
+  <h1 class="h2">Dashboard</h1>
+  <h2 class="h3"><%= current_member.profile.login %>
+  <%= link_to "Edit Profile", edit_profile_path(current_member.profile), class: "btn btn-sm btn-success ml-4" %></h2>
+
+  <div class="card card-2by1">
+    <div class="card-body">
+      <div class="media flex-wrap align-items-center">
+        <div class="media-left">
+          <i class="material-icons text-muted-light">how_to_reg</i>
+        </div>
+        <div class="media-body" style="min-width: 180px">
+          <p class="card-subtitle">Member for <%= time_ago_in_words(current_member.created_at) %></p>
+        </div>
+      </div>
+      <% unless current_member.last_sign_in_at.blank? %>
+        <div class="media flex-wrap align-items-center">
+          <div class="media-left">
+            <i class="material-icons text-muted-light">device_hub</i>
+          </div>
+          <div class="media-body">
+            <p class="card-subtitle">Last SignIn at <%= time_ago_in_words(current_member.last_sign_in_at) %> ago</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="card">
+        <div class="card-header d-flex align-items-center">
+          <div class="flex">
+            <h4 class="card-title">
+              <span class="h2 mb-0 mr-1 text-primary"><%= current_member.notifications.count %></span>
+              Notifications
+            </h4>
+            <p class="card-subtitle">Recent Messages</p>
+          </div>
+          <div class="media-right">
+            <a class="btn btn-sm btn-primary" href="/notifications">
+              <i class="material-icons">keyboard_arrow_right</i>
+            </a> 
+          </div>
+        </div>
+        <div class="card-body">
+          <% @notifications.each do |notice| %>
+            <a href=<%= url_for notification_path(notice) %> class="list-group-item list-group-item-action" data-method="put">
+              <span class="d-flex align-items-center mb-1">
+                <small class="text-muted"><%= time_ago_in_words(notice.created_at) %> ago</small>
+              </span>
+              <span class="d-flex">
+                <span class="avatar avatar-xs mr-2">
+                  <% if notice.sender.avatar_image.present? %>
+                    <%= image_tag notice.sender.avatar_image.variant(resize_to_limit: [150, 150]), class: "avatar-img rounded-circle" %>
+                  <% else %>
+                    <%= gravatar_image_tag(notice.sender.member, class: "avatar-img rounded-circle") %>
+                  <% end %>
+                </span>
+                <span class="flex d-flex flex-column">
+                  <strong><%= notice.sender.login %></strong>
+                  <span class="text-black-70"><%= notice.params[:heading] %></span>
+                </span>
+              </span>
+            </a>
+          <% end %>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="media align-items-center">
+            <div class="media-body">
+              <h4 class="card-title">
+                <span class="h2 mb-0 mr-1 text-primary"><%= current_member.entries.count %></span>
+                Gears
+              </h4>
+              <p class="card-subtitle">Your posted gears</p>
+            </div>
+            <div class="media-right">
+              <a class="btn btn-sm btn-success mr-2" href="/entries/new">Post Your Gear</a>
+              <a class="btn btn-sm btn-primary" href="/manages/my_entries">
+                <i class="material-icons">keyboard_arrow_right</i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <ul class="list-group list-group-fit mb-0" style="z-index: initial;">
+          <% @entries.each do |entry| %>
+            <li class="list-group-item" style="z-index: initial;">
+              <div class="d-flex align-items-center">
+                <%= link_to entry_path(entry), class: "avatar avatar-4by3 avatar-sm mr-3" do %>
+                  <% if entry.entry_images.present? %>
+                    <%= image_tag entry.entry_images.first.variant(resize_to_limit: [64, nil]), class: "avatar-img rounded" %>
+                  <% else %>
+                    "THIS ITEMS DO NOT HAVE A IMAGE"
+                  <% end %>
+                <% end %>
+                <div class="flex">
+                  <%= link_to entry_path(entry), class: "text-body" do %>
+                    <strong><%= entry.heading %></strong>
+                  <% end %>
+                </div>
+                <div class="dropdown ml-3">
+                  <a href="#" class="dropdown-toggle text-muted" data-caret="false" data-toggle="dropdown">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <%= link_to "Edit", edit_entry_path(entry), class: "dropdown-item" %>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="media align-items-center">
+
+            <div class="media-body">
+              <h4 class="card-title">
+                <span class="h2 mb-0 mr-1 text-primary"><%= current_member.entry_collections.count %></span>
+                Collections
+              </h4>
+              <p class="card-subtitle">Your vortual collections</p>
+            </div>
+            <div class="media-right">
+              <a class="btn btn-sm btn-primary" href="/manages/entry_collections">
+                <i class="material-icons">keyboard_arrow_right</i>
+              </a> 
+            </div>
+          </div>
+        </div>
+
+        <ul class="list-group list-group-fit mb-0" style="z-index: initial;">
+          <% @collections.each do |v| %>
+            <li class="list-group-item" style="z-index: initial;">
+              <div class="d-flex align-items-center">
+                <%= link_to entry_path(v.votable.id), class: "avatar avatar-4by3 avatar-sm mr-3" do %>
+                  <% if v.votable.entry_images.present? %>
+                    <%= image_tag v.votable.entry_images.first.variant(resize_to_limit: [64, nil]), class: "avatar-img rounded" %>
+                  <% else %>
+                    "THIS ITEMS DO NOT HAVE A IMAGE"
+                  <% end %>
+                <% end %>
+                <div class="flex">
+                  <%= link_to entry_path(v.votable.id), class: "text-body" do %>
+                    <strong><%= v.votable.heading %></strong>
+                  <% end %>
+                </div>
+                <div class="dropdown ml-3">
+                  <a href="#" class="dropdown-toggle text-muted" data-caret="false" data-toggle="dropdown">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <%= link_to "Delete from Collection", entry_uncollection_url({entry_id: v.votable.id, manage: 'member'}), data: { confirm: "Are you sure you want to delete this collection?" }, method: :delete, class: "dropdown-item text-danger" %>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="media align-items-center">
+
+            <div class="media-body">
+              <h4 class="card-title">
+                <span class="h2 mb-0 mr-1 text-primary"><%= current_member.follows.count %></span>
+                Following
+              </h4>
+              <p class="card-subtitle">Your Following Member</p>
+            </div>
+            <div class="media-right">
+              <a class="btn btn-sm btn-primary" href="/manages/member_follows">
+                <i class="material-icons">keyboard_arrow_right</i>
+              </a> 
+            </div>
+          </div>
+        </div>
+
+        <ul class="list-group list-group-fit mb-0" style="z-index: initial;">
+          <% @follows.each do |v| %>
+            <li class="list-group-item" style="z-index: initial;">
+              <div class="d-flex align-items-center">
+                <%= link_to profile_path(v.votable.profile.id), class: "avatar mr-2" do %>
+                  <% if v.votable.profile.avatar_image.present? %>
+                    <%= image_tag(v.votable.profile.avatar_image.variant(resize_to_limit: [150, 150]), class: "avatar-img rounded-circle") %>
+                  <% else %>    
+                    <%= gravatar_image_tag(v.votable, class: "avatar-img rounded-circle") %>
+                  <% end %>
+                <% end %>
+                <div class="flex">
+                  <%= link_to profile_path(v.votable.profile.id), class: "text-body" do %>
+                    <strong><%= v.votable.profile.login %></strong>
+                  <% end %>
+                </div>
+                <div class="dropdown ml-3">
+                  <a href="#" class="dropdown-toggle text-muted" data-caret="false" data-toggle="dropdown">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <%= link_to "Unfollow", unfollow_path(follow_id: v.votable.id, manage: 'member'), data: { confirm: "Are you sure unfollow this member?" }, method: :patch, class: "dropdown-item text-danger" %>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="media align-items-center">
+
+            <div class="media-body">
+              <h4 class="card-title">
+                <span class="h2 mb-0 mr-1 text-primary"><%= current_member.followers.count %></span>
+                Followers
+              </h4>
+              <p class="card-subtitle">Member who Following You</p>
+            </div>
+            <div class="media-right">
+              <a class="btn btn-sm btn-primary" href="/manages/member_followers">
+                <i class="material-icons">keyboard_arrow_right</i>
+              </a> 
+            </div>
+          </div>
+        </div>
+
+        <ul class="list-group list-group-fit mb-0" style="z-index: initial;">
+          <% @followers.each do |v| %>
+            <li class="list-group-item" style="z-index: initial;">
+              <div class="d-flex align-items-center">
+                <%= link_to profile_path(v.member.profile.id), class: "avatar mr-2" do %>
+                  <% if v.member.profile.avatar_image.present? %>
+                    <%= image_tag(v.member.profile.avatar_image.variant(resize_to_limit: [150, 150]), class: "avatar-img rounded-circle") %>
+                  <% else %>    
+                    <%= gravatar_image_tag(v.member, class: "avatar-img rounded-circle") %>
+                  <% end %>
+                <% end %>
+                <div class="flex">
+                  <%= link_to profile_path(v.member.profile.id), class: "text-body" do %>
+                    <strong><%= v.member.profile.login %></strong>
+                  <% end %>
+                </div>
+                <div class="dropdown ml-3">
+                  <a href="#" class="dropdown-toggle text-muted" data-caret="false" data-toggle="dropdown">
+                    <i class="material-icons">more_vert</i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <%= link_to 'block', block_path(follow_id: v.member.id, manage: 'member'), data: { confirm: "Are you sure block this member?" }, method: :patch, class: "dropdown-item text-danger" %>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="media align-items-center">
+            <div class="media-body">
+              <h4 class="card-title">Profile as Guitarist</h4>
+              <p class="card-subtitle">your profile</p>
+            </div>
+          </div>
+        </div>
+        <ul class="list-group list-group-fit">
+          <li class="list-group-item forum-thread">
+            <div class="row">
+              <div class="col-4 text-black-50">about me</div>
+              <div class="col"><%= current_member.profile.about_me.truncate(30) if current_member.profile.about_me %></div>
+            </div>
+          </li>
+          <li class="list-group-item forum-thread">
+            <div class="media align-items-center">
+              <div class="media-left">
+                <div class="forum-icon-wrapper">
+                  <%= link_to edit_profile_path(current_member.profile), class: "forum-thread-icon" do %>
+                    <i class="material-icons">description</i>
+                  <% end %>
+                </div>
+              </div>
+              <div class="media-body">
+                <div class="d-flex align-items-center">
+                  <%= link_to edit_profile_path(current_member.profile), class: "text-body" do %>
+                    <strong>Edit Profile</strong>
+                  <% end %>
+                  <small class="ml-auto text-muted">edit your prfile</small>
+                </div>
+              </div>
+          </li>
+        </ul>
+            </div>
+      </div>
+    </div>
+
+  </div>
+

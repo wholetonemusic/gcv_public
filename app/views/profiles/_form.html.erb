@@ -1,0 +1,140 @@
+<div class="container-fluid page__container">
+  <ol class="breadcrumb mt-5">
+    <li class="breadcrumb-item"><%= link_to 'Home', member_root_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Profile', profile_path(current_member.profile.id) %></li>
+    <li class="breadcrumb-item active"><%= link_to 'Edit profile', edit_profile_path(current_member.profile.id) %></li>
+  </ol>
+  <div class="media align-items-center mb-headings">
+    <div class="media-body">
+      <h1 class="h2">Edit Profile</h1>
+    </div>
+  
+    <%= form_with(model: profile) do |form| %>
+    <div class="media-right">
+      <%= form.submit class: "btn btn-success" %>
+    </div>
+    <% if profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+      <ul>
+      <% profile.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+      </ul>
+    </div>
+    <% end %>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Basic Information</h4>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <%= form.label :login, "Login name", class: "form-label" %>
+            <%= form.text_field :login, class: "form-control" %>
+	  </div>
+
+          <div class="form-group">
+	    <%= form.label :avatar_image, "Photo", class: "form-label" %>
+	    <div class="custom-file">
+            <%= form.file_field :avatar_image, class: "custom-file-input" %>
+            <%= form.label :avatar_image, "profile image", class: "custom-file-label" %>
+            </div>
+	  </div>
+
+          <div class="form-group">
+	    <%= form.label :background_image, "Background Photo", class: "form-label" %>
+	    <div class="custom-file">
+            <%= form.file_field :background_image, class: "custom-file-input" %>
+            <%= form.label :background_image, "background image", class: "custom-file-label" %>
+            </div>
+          </div>
+          
+              
+          <div class="form-group">
+            <%= form.label :about_me, class: "form-label" %>
+            <%= form.text_area :about_me, class: "form-control", style: "height: 150px;" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :play_field, class: "form-label" %>
+            <%= form.text_area :play_field, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :favorite_guitarist, class: "form-label" %>
+            <%= form.text_area :favorite_guitarist, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :favorite_studybook, class: "form-label" %>
+            <%= form.text_area :favorite_studybook, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :favorite_band, class: "form-label" %>
+            <%= form.text_area :favorite_band, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :favorite_album, class: "form-label" %>
+            <%= form.text_area :favorite_album, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :favorite_video, class: "form-label" %>
+            <%= form.text_area :favorite_video, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :favorite_song, class: "form-label" %>
+            <%= form.text_area :favorite_song, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :play_history, class: "form-label" %>
+            <%= form.text_field :play_history, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :band, class: "form-label" %>
+            <%= form.text_field :band, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :blog, class: "form-label" %>
+            <%= form.text_field :blog, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :website, class: "form-label" %>
+            <%= form.text_field :website, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :youtube, class: "form-label" %>
+            <%= form.text_field :youtube, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :twitter, class: "form-label" %>
+            <%= form.text_field :twitter, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.label :style, class: "form-label" %>
+            <%= form.text_field :style, class: "form-control" %>
+          </div>
+    
+          <div class="form-group">
+            <%= form.submit class: "btn btn-success" %>
+          </div>
+  <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

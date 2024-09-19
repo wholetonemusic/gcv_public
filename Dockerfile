@@ -1,4 +1,4 @@
-FROM ruby:2.7.4
+FROM ruby:####
 RUN apt-get update -qq && apt-get install -y nodejs npm
 RUN npm install --global yarn
 RUN yarn add jquery

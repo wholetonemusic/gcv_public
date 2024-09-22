@@ -24,4 +24,5 @@ Docker, Git, Rspec, Selenium, Linux
 Linux(Ubuntu), Rails, MySQL, ElasticSearch, Redis, Nginx, Puma
 
 > インフラ
+
 Akamai (Linode cloud service)

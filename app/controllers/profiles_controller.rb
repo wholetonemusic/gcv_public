@@ -7,10 +7,10 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1 or /profiles/1.json
   def show
-    @entries = @profile.member.entries.
-      order('created_at desc').page(params[:page]).per_page(7)
-    @collections = @profile.member.entry_collections.
-      order('created_at desc').page(params[:page]).per_page(7)
+    @entries = @profile.member.entries
+      .order('created_at desc').page(params[:page]).per_page(7)
+    @collections = @profile.member.entry_collections
+      .order('created_at desc').page(params[:page]).per_page(7)
   end
 
   # GET /profiles/1/edit
@@ -68,10 +68,10 @@ class ProfilesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_profile
-    @profile = Profile.
-      with_attached_avatar_image.
-      with_attached_background_image.
-      find(params[:id])
+    @profile = Profile
+      .with_attached_avatar_image
+      .with_attached_background_image
+      .find(params[:id])
   end
 
   def set_read_ability_and_profile

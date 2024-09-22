@@ -33,10 +33,10 @@ class EntriesController < ApplicationController
 
   # GET /entries/1 or /entries/1.json
   def show
-    @entry = Entry.with_attached_entry_images.
-      includes(:profile).includes(:collectors).
-      includes(commontator_thread: :comments).
-      find(params[:id])
+    @entry = Entry.with_attached_entry_images
+      .includes(:profile).includes(:collectors)
+      .includes(commontator_thread: :comments)
+      .find(params[:id])
 
     # commontator list of comments
     commontator_thread_show(@entry)

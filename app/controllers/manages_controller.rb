@@ -2,8 +2,8 @@ class ManagesController < ApplicationController
   before_action :authenticate_member!
 
   def my_entries
-    @entries = current_member.entries.
-        order('created_at desc').page(params[:page]).per_page(12)
+    @entries = current_member.entries
+      .order('created_at desc').page(params[:page]).per_page(12)
     @search = params[:search]
     if @search.present?
       @search = params.require(:search).permit(:q)
@@ -18,8 +18,8 @@ class ManagesController < ApplicationController
   end
 
   def entry_collections
-    @collections = current_member.collection_votes.
-        order('created_at desc').includes(:votable).page(params[:page]).per_page(12)
+    @collections = current_member.collection_votes
+      .order('created_at desc').includes(:votable).page(params[:page]).per_page(12)
     @search = params[:search]
     if @search.present?
       @search = params.require(:search).permit(:q)
@@ -34,8 +34,8 @@ class ManagesController < ApplicationController
   end
 
   def entry_favorites
-    @favorites = current_member.favorite_votes.
-        order('created_at desc').includes(:votable).page(params[:page]).per_page(12)
+    @favorites = current_member.favorite_votes
+      .order('created_at desc').includes(:votable).page(params[:page]).per_page(12)
     @search = params[:search]
     if @search.present?
       @search = params.require(:search).permit(:q)

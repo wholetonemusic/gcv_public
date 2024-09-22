@@ -8,8 +8,7 @@
 各パッケージやgemのバージョンは、非表示としています。
 
 開発言語
-: Ruby
-: JavaScript SQL HTML CSS
+: Ruby, JavaScript, SQL, HTML, CSS
 
 フレームワーク
 : Ruby on Rails
